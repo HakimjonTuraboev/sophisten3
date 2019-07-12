@@ -1,0 +1,247 @@
+
+{
+    "_id": "requirementor",
+    "title": "Requirementor",
+    "icon": "https://ccmjs.github.io/mkaul-components/sophist/resources/icon.svg",
+    "abstract": "Collect your requirements",
+    "description": "Collect formally structured sentences (e.g. requirements) in a list. Store persistently or work on the list collaboratively via WebSockets.",
+    "url": "https://ccmjs.github.io/mkaul-components/sophist/versions/ccm.sophist-3.0.0.js",
+    "version": "3.0.0",
+    "website": "https://ccmjs.github.io/mkaul-components/",
+    "developer": "Manfred Kaul",
+    "license": "MIT License",
+    "ignore": {
+        "demos": [
+            {
+                "title": "demo",
+                "config": [
+                    "ccm.get",
+                    "https://ccmjs.github.io/mkaul-components/sophist/resources/configs.js",
+                    "demo"
+                ]
+            },
+            {
+                "title": "mit Bedingung",
+                "config": [
+                    "ccm.get",
+                    "https://ccmjs.github.io/mkaul-components/sophist/resources/configs.js",
+                    "mit_Bedingung"
+                ]
+            },
+            {
+                "title": "Local Persistence",
+                "config": [
+                    "ccm.get",
+                    "https://ccmjs.github.io/mkaul-components/sophist/resources/configs.js",
+                    "local_persistence"
+                ]
+            },
+            {
+                "title": "Remote Persistence",
+                "config": [
+                    "ccm.get",
+                    "https://ccmjs.github.io/mkaul-components/sophist/resources/configs.js",
+                    "remote_persistence"
+                ]
+            },
+            {
+                "title": "Collaborative",
+                "config": [
+                    "ccm.get",
+                    "https://ccmjs.github.io/mkaul-components/sophist/resources/configs.js",
+                    "websockets"
+                ]
+            }
+        ],
+        "builder": [
+            {
+                "title": "Input Mask",
+                "url": "https://ccmjs.github.io/akless-components/app_builder/versions/ccm.app_builder-3.0.0.js",
+                "config": {
+                    "builder": [
+                        "ccm.component",
+                        "https://ccmjs.github.io/akless-components/submit/versions/ccm.submit-7.1.3.js",
+                        {
+                            "ignore.defaults": {
+                                "headers": ["Systemname","Verbindlichkeit","Funktionalität","Objekt","Prozesswort", "Buttons"],
+                                "columns": ["system","modal","func","object","process"],
+
+                                "initial_values": {
+                                    "system": "Das System",
+                                    "object": "Objekt",
+                                    "process": "Prozesswort"
+                                },
+
+                                "data": {
+                                    "store": [ "ccm.store", "https://ccmjs.github.io/mkaul-components/sophist/resources/datasets.js" ],
+                                    "key": "demo"
+                                },
+
+                                "html": {
+                                    "main": {
+                                        "inner": [ { "tag": "h2", "inner": "Sophist Schablonen" } ]
+                                    },
+                                    "buttons":
+                                    { "tag": "td", "inner": [
+                                        { "tag": "button", "inner": "edit", "onclick": "%edit%" },
+                                        { "tag": "button", "inner": "delete", "onclick": "%del%" }
+                                    ]
+                                    },
+                                    "save_button": { "tag": "button", "inner": "save", "onclick": "%save%" }
+                                },
+
+                                "ignore_button_functions": ["save","edit","del"],
+
+                                "form": {
+                                    "system": { "tag": "input", "type": "text", "class": "system", "value": "%system%" },
+                                    "modal": { "tag": "select", "class": "modal", "inner": [
+                                        {
+                                            "tag": "option",
+                                            "inner": "MUSS"
+                                        },
+                                        {
+                                            "tag": "option",
+                                            "inner": "SOLL"
+                                        },
+                                        {
+                                            "tag": "option",
+                                            "inner": "KANN"
+                                        }
+                                    ] },
+                                    "func": { "tag": "select", "class": "func", "inner": [
+                                        {
+                                            "tag": "option",
+                                            "inner": "die Möglichkeit bieten"
+                                        },
+                                        {
+                                            "tag": "option",
+                                            "inner": "fähig sein"
+                                        }
+                                    ] },
+                                    "object": { "tag": "input", "type": "text", "class": "object", "value": "%object%" },
+                                    "process": { "tag": "input", "type": "text", "class": "process", "value": "%process%" },
+                                    "condition": { "tag": "input", "type": "text", "class": "condition", "value": "%condition%" }
+                                },
+
+                                "css": [ "ccm.load",  "https://ccmjs.github.io/mkaul-components/sophist/resources/default.css" ]
+                            },
+                            "json_builder": [
+                                "ccm.component",
+                                "https://ccmjs.github.io/akless-components/json_builder/versions/ccm.json_builder-1.4.1.js",
+                                {
+                                    "html.inner.1": "",
+                                    "directly": true
+                                }
+                            ],
+                            "entries": [
+                                {
+                                    "label": "Headers",
+                                    "type": "several",
+                                    "info": "Headers of table",
+                                    "item": {
+                                        "label": "%nr%. header",
+                                        "name": "headers",
+                                        "type": "text"
+                                    }
+                                },
+                                {
+                                    "label": "Columns",
+                                    "type": "several",
+                                    "info": "columns of table",
+                                    "item": {
+                                        "label": "%nr%. column",
+                                        "name": "columns",
+                                        "type": "text"
+                                    }
+                                },
+                                {
+                                    "label": "Initial Values",
+                                    "name": "initial_values",
+                                    "type": "object",
+                                    "info": "inital values in the input fields of a new row. Use columns as keys."
+                                },
+                                {
+                                    "name": "data",
+                                    "type": "hidden"
+                                },
+                                {
+                                    "name": "data.store",
+                                    "type": "hidden"
+                                },
+                                {
+                                    "label": "Data store URL",
+                                    "name": "data.store.1",
+                                    "type": "url",
+                                    "info": "URL of the data store"
+                                },
+                                {
+                                    "label": "Key",
+                                    "name": "data.key",
+                                    "type": "text",
+                                    "info": "key in data store"
+                                },
+                                {
+                                    "label": "HTML structure",
+                                    "name": "html",
+                                    "type": "json_builder",
+                                    "info": "structure of HTML fragments"
+                                },
+                                {
+                                    "label": "Button functions",
+                                    "type": "several",
+                                    "info": "Functions of buttons not to be persisted",
+                                    "item": {
+                                        "label": "%nr%. function",
+                                        "name": "ignore_button_functions",
+                                        "type": "text"
+                                    }
+                                },
+                                {
+                                    "label": "form structure",
+                                    "name": "form",
+                                    "type": "json_builder",
+                                    "info": "structure of input forms"
+                                },
+                                {
+                                    "name": "css",
+                                    "type": "hidden"
+                                },
+                                {
+                                    "label": "CSS URL",
+                                    "name": "css.1",
+                                    "type": "url",
+                                    "info": "URL of CSS file"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "title": "JSON Builder",
+                "url": "https://ccmjs.github.io/akless-components/app_builder/versions/ccm.app_builder-3.0.0.js",
+                "config": {
+                    "builder": [
+                        "ccm.component",
+                        "https://ccmjs.github.io/akless-components/json_builder/versions/ccm.json_builder-1.4.1.js",
+                        {
+                            "html.inner.1": "",
+                            "directly": true
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "updated_at": "2019-07-07T10:41:22+02:00",
+    "created_at": "2019-07-07T10:41:22+02:00",
+    "_": {
+        "creator": "mkaul2m",
+        "realm": "hbrsinfkaul",
+        "access": {
+            "get": "all",
+            "set": "creator",
+            "del": "creator"
+        }
+    }
+}
